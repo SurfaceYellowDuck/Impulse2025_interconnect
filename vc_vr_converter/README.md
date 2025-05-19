@@ -7,7 +7,7 @@
 
 - Идейная схема модуля(некоторые сигналы опущены специально):
 
-<img src="https://github.com/SurfaceYellowDuck/Impulse2025_interconnect/blob/main/images/schema_upd.png" width="500">
+<img src="https://github.com/SurfaceYellowDuck/Impulse2025_interconnect/blob/main/images/chema_upd.png" width="500">
 
 - Описание работы спроектированных модулей:
 
