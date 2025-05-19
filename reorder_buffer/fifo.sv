@@ -13,20 +13,14 @@ module fifo
     output logic               full
 );
 
-    //------------------------------------------------------------------------
-
     localparam pointer_width = $clog2 (depth),
                           counter_width = $clog2 (depth + 1);
 
     localparam [counter_width - 1:0] max_ptr = counter_width' (depth - 1);
 
-    //------------------------------------------------------------------------
-
     logic [pointer_width - 1:0] wr_ptr_d, rd_ptr_d, wr_ptr_q, rd_ptr_q;
     logic empty_d, full_d;
     logic [width - 1:0] data [0: depth - 1];
-
-    //------------------------------------------------------------------------
 
     always_comb
     begin
@@ -61,8 +55,6 @@ module fifo
         endcase
     end
 
-    //------------------------------------------------------------------------
-
     always_ff @ (posedge clk or posedge rst)
         if (rst)
         begin
@@ -78,8 +70,6 @@ module fifo
             empty    <= empty_d;
             full     <= full_d;
         end
-
-    //------------------------------------------------------------------------
 
     always_ff @ (posedge clk)
         if (push)

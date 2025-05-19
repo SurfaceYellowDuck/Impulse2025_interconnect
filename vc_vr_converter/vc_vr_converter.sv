@@ -38,12 +38,15 @@ always_ff @( posedge clk ) begin
         given_credits_cnt <= '0;
         free_credits <= 1'b0;
     end
-    else if(given_credits_cnt < CREDIT_NUM & ~fifo_pop)begin
-        given_credits_cnt <= given_credits_cnt + 1;
-        free_credits <= 1'b1;
-    end
-    else if(given_credits_cnt < CREDIT_NUM & fifo_pop)begin
-        free_credits <= 1'b1;
+    else if(given_credits_cnt < CREDIT_NUM)begin
+        if(fifo_pop)begin
+            free_credits <= 1'b1;
+        end
+        else if(~fifo_pop)begin
+            given_credits_cnt <= given_credits_cnt + 1;
+            free_credits <= 1'b1;
+        end
+        
     end
     else begin
         free_credits <= 1'b0;

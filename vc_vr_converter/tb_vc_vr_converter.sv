@@ -25,7 +25,6 @@ module tb_vc_vr_converter #(parameter DATA_WIDTH = 8, CREDIT_NUM = 2, CLK_PERIOD
     .m_ready_i(m_ready_i)
   );
 
-  // Генерация тактового сигнала 
   initial begin
   $display("PWD = %s", MEM_FILE);
 
