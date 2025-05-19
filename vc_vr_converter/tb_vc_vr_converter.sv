@@ -33,11 +33,6 @@ module tb_vc_vr_converter #(parameter DATA_WIDTH = 8, CREDIT_NUM = 2, CLK_PERIOD
   end
 
   initial begin
-    $dumpfile("waveform.vcd");
-    $dumpvars(0, tb_vc_vr_converter);
-  end
-
-  initial begin
     rst_n <= 1'bx;
     @ (posedge clk);
     rst_n <= 1'b0;

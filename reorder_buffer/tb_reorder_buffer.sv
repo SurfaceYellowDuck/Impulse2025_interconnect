@@ -50,11 +50,6 @@ logic m_rready_o;
   end
 
   initial begin
-    $dumpfile("waveform.vcd");
-    $dumpvars(0, tb_reorder_buffer);
-  end
-
-  initial begin
     rst_n <= 1'bx;
     // s_arid_i <= 3'd1;
     @ (posedge clk);
