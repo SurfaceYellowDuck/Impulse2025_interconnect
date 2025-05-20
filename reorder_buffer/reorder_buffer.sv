@@ -54,7 +54,7 @@ assign s_arready_o  = up_ready & ~fifo_full;
 assign fifo_push    = up_ready & s_arvalid_i & ~fifo_full;
 assign s_rid_o      = ar_id_o;
 assign m_rready_o   = s_rready_i;
-assign fifo_pop = s_rvalid_o && s_rready_i;
+assign fifo_pop     = s_rvalid_o && s_rready_i;
 
 fifo  #(.width (4), .depth(16)) fifo_id
 (
@@ -70,13 +70,14 @@ fifo  #(.width (4), .depth(16)) fifo_id
 
 mem data_valid_mem (
     .clk        ( clk                   ),
-    .rst        ( ~rst_n | fifo_empty   ),
+    .rst        ( ~rst_n                ),
     .waddr      ( m_rid_i               ),
     .raddr      ( ar_id_o               ),
     .data_i     ( m_rdata_i             ),
-    .vld_i      ( m_rvalid_i            ),
     .data_o     ( s_rdata_o             ),
-    .valid_o    ( s_rvalid_o            )
+    .valid_o    ( s_rvalid_o            ),
+    .we         ( m_rvalid_i            ),
+    .re         ( fifo_pop              )
 );
 
 endmodule

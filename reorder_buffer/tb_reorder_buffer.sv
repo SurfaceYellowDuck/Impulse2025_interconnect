@@ -49,6 +49,11 @@ logic m_rready_o;
     forever #(CLK_PERIOD/2) clk <= ~clk;
   end
 
+  // initial begin
+  //   $dumpfile("waveform.vcd");
+  //   $dumpvars(0, tb_reorder_buffer);
+  // end
+
   initial begin
     rst_n <= 1'bx;
     // s_arid_i <= 3'd1;
@@ -116,7 +121,57 @@ logic m_rready_o;
     s_rready_i <= 1;
     m_rdata_i <= 8'h80;
     m_rid_i <= 'd5;
+
+
+    repeat (7)@(posedge clk);
+    rst_n <= 1'b0;
+    m_arready_i <= 1'b1;
+    s_arvalid_i <= '0;
+    @(posedge clk);
+    rst_n <= 1'b1;
+
+    repeat (1)@(posedge clk);
+    m_arready_i <= 1'b1;
+    s_arvalid_i <= '1;
+    s_arid_i <= 3'd2;
+
+    repeat (1)@(posedge clk);
+    m_arready_i <= 1'b1;
+    s_arvalid_i <= '1;
+    s_arid_i <= 3'd2;
+
+    if(s_rid_o == 8'h2 & s_rdata_o == 8'hfe & s_rvalid_o == '1)begin
+        $display("Error: s_rid_o has been read");
+        $stop;
+    end
+
+    repeat (1)@(posedge clk);
+    m_arready_i <= 1'b1;
+    s_arvalid_i <= '1;
+    s_arid_i <= 3'd3;
+
+    repeat (1)@(posedge clk);
+    m_rvalid_i <= '1;
+    s_rready_i <= 1;
+    m_rdata_i <= 8'h60;
+    m_rid_i <= 'd2;
+
+    repeat (1)@(posedge clk);
+    m_rvalid_i <= '1;
+    s_rready_i <= 1;
+    m_rdata_i <= 8'h70;
+    m_rid_i <= 'd2;
+
+    repeat (1)@(posedge clk);
+    m_rvalid_i <= '1;
+    s_rready_i <= 1;
+    m_rdata_i <= 8'h80;
+    m_rid_i <= 'd3;
+
+    
     #200 $finish;
+
+    
   end
 
 endmodule
